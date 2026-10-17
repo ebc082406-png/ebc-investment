@@ -1,241 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EBC | Demo Dashboard</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f1f5fb;
-      color: #17233b;
-    }
-    header {
-      background: #102b59;
-      color: white;
-      padding: 22px 18px;
-    }
-    header h1 { margin: 0; font-size: 28px; }
-    header p { margin-bottom: 0; color: #d6e5ff; }
-    nav {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 12px;
-      background: white;
-      position: sticky;
-      top: 0;
-    }
-    nav button {
-      border: 0;
-      border-radius: 8px;
-      padding: 11px 14px;
-      background: #e8eef8;
-      color: #102b59;
-      white-space: nowrap;
-      font-weight: bold;
-    }
-    nav button.active { background: #1769e0; color: white; }
-    main { max-width: 850px; margin: auto; padding: 16px; }
-    .notice {
-      padding: 13px;
-      border-radius: 10px;
-      background: #fff3cd;
-      color: #664d03;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-    .panel {
-      background: white;
-      padding: 18px;
-      margin: 14px 0;
-      border-radius: 14px;
-      box-shadow: 0 3px 12px #102b5910;
-    }
-    .balance {
-      background: linear-gradient(130deg, #102b59, #1769e0);
-      color: white;
-    }
-    .balance h2 { font-size: 30px; margin: 8px 0; }
-    .muted { color: #68758b; font-size: 13px; }
-    .balance .muted { color: #d6e5ff; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
-      gap: 12px;
-    }
-    .stat {
-      padding: 14px;
-      border: 1px solid #e0e8f5;
-      border-radius: 10px;
-    }
-    .stat strong { display: block; font-size: 20px; margin-top: 8px; }
-    .plan h3 { margin-bottom: 6px; }
-    .price { font-size: 25px; font-weight: bold; color: #1769e0; }
-    button, input, textarea { font: inherit; }
-    .primary {
-      background: #1769e0;
-      color: white;
-      border: 0;
-      border-radius: 8px;
-      padding: 12px 15px;
-      cursor: pointer;
-    }
-    input, textarea {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      margin: 8px 0 14px;
-    }
-    label { font-size: 14px; font-weight: bold; }
-    .page { display: none; }
-    .page.active { display: block; }
-    footer { text-align: center; padding: 24px; color: #68758b; font-size: 12px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EBC | Dashboard</title>
+<style>
+:root {
+  --navy:#102b59;
+  --blue:#1769e0;
+  --light:#f1f5fb;
+  --text:#17233b;
+  --muted:#68758b;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--light);
+  color:var(--text);
+}
+header {
+  padding:24px 18px;
+  color:white;
+  background:linear-gradient(130deg,#102044,#1769e0);
+}
+.brand { font-size:28px;font-weight:800;letter-spacing:2px; }
+header p { margin:7px 0 0;color:#d6e5ff; }
+nav {
+  display:flex;gap:8px;overflow-x:auto;
+  padding:12px;background:white;position:sticky;top:0;
+  z-index:5;box-shadow:0 2px 8px #102b5910;
+}
+button { font:inherit;cursor:pointer; }
+nav button {
+  border:0;border-radius:9px;padding:11px 14px;
+  background:#e8eef8;color:var(--navy);font-weight:bold;
+}
+nav button.active { background:var(--blue);color:white; }
+main { max-width:900px;margin:auto;padding:16px; }
+.notice {
+  background:#fff3cd;color:#664d03;padding:13px;
+  border-radius:12px;font-size:13px;line-height:1.6;
+}
+.page { display:none; }
+.page.active { display:block; }
+.panel {
+  background:white;padding:19px;margin:14px 0;
+  border-radius:16px;box-shadow:0 4px 16px #102b590c;
+}
+.hero {
+  padding:25px;background:linear-gradient(130deg,#102b59,#1769e0);
+  color:white;border-radius:18px;margin:15px 0;
+}
+.hero h2 { font-size:28px;margin:10px 0; }
+.muted { color:var(--muted);font-size:13px;line-height:1.5; }
+.hero .muted { color:#d6e5ff; }
+.grid {
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+  gap:12px;
+}
+.stat {
+  background:white;padding:17px;border:1px solid #e0e8f5;
+  border-radius:14px;
+}
+.stat strong { display:block;font-size:22px;margin-top:9px; }
+.plans {
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+}
+.plan { margin:0;border:1px solid #e0e8f5; }
+.plan h3 { margin-top:0; }
+.price { font-size:29px;font-weight:800;color:var(--blue);margin:12px 0; }
+.primary,.secondary {
+  border:0;border-radius:10px;padding:13px 16px;font-weight:bold;
+}
+.primary { background:var(--blue);color:white; }
+.secondary { background:#e8eef8;color:var(--navy); }
+.full { width:100%; }
+input,textarea {
+  width:100%;padding:13px;border:1px solid #cbd5e1;
+  border-radius:9px;margin:8px 0 15px;font:inherit;
+}
+label { font-size:14px;font-weight:bold; }
+footer { text-align:center;padding:25px;color:var(--muted);font-size:12px; }
+.tag {
+  display:inline-block;background:#e8f1ff;color:#1454ac;
+  padding:5px 9px;border-radius:20px;font-size:12px;font-weight:bold;
+}
+hr { border:0;border-top:1px solid #e5eaf2;margin:17px 0; }
+@media(max-width:420px) {
+  header { padding:20px 15px; }
+  main { padding:12px; }
+  .hero h2 { font-size:24px; }
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>EBC</h1>
-    <p>Welcome to your demo dashboard</p>
-  </header>
 
-  <nav>
-    <button class="active" data-page="home">Home</button>
-    <button data-page="plans">Plans</button>
-    <button data-page="wallet">Wallet</button>
-    <button data-page="history">History</button>
-    <button data-page="profile">Profile</button>
-    <button data-page="support">Support</button>
-  </nav>
+<header>
+  <div class="brand">EBC</div>
+  <p>Your dashboard, all in one place</p>
+</header>
 
-  <main>
-    <div class="notice">
-      <strong>DEMO ONLY:</strong> This website is a prototype.
-      Plan amounts and daily figures are examples, not guaranteed
-      returns. No real deposits, investments or withdrawals are processed.
-      Do not enter passwords or payment details.
+<nav aria-label="Main navigation">
+  <button class="active" data-page="home">Home</button>
+  <button data-page="plans">Plans</button>
+  <button data-page="wallet">Wallet</button>
+  <button data-page="history">History</button>
+  <button data-page="profile">Profile</button>
+  <button data-page="support">Support</button>
+</nav>
+
+<main>
+  <div class="notice">
+    <strong>DEMO WEBSITE ONLY.</strong>
+    No real investments, deposits, withdrawals, or payouts are processed.
+    Plan prices are examples, not an offer or a promise of returns.
+    The checkout below is a simulation and does not open a real payment.
+  </div>
+
+  <section id="home" class="page active">
+    <div class="hero">
+      <span class="tag">DEMO ACCOUNT</span>
+      <h2>Welcome to EBC</h2>
+      <p>Manage your demo plans and explore your dashboard.</p>
+      <button class="primary" onclick="showPage('plans')">Explore plans →</button>
     </div>
+    <div class="grid">
+      <div class="stat">Demo balance<strong>₱0.00</strong></div>
+      <div class="stat">Active plans<strong>0</strong></div>
+      <div class="stat">Transactions<strong id="transactionCount">0</strong></div>
+    </div>
+    <div class="panel">
+      <h3>Getting started</h3>
+      <p>Explore the sample plans, then try the simulated checkout.</p>
+      <p class="muted">Your demo activity is stored only in this browser and is not a real account.</p>
+    </div>
+  </section>
 
-    <section id="home" class="page active">
-      <div class="panel balance">
-        <span>Demo wallet balance</span>
-        <h2>₱0.00</h2>
-        <span class="muted">Illustrative balance only</span>
-      </div>
-      <div class="grid">
-        <div class="stat">Available balance<strong>₱0.00</strong></div>
-        <div class="stat">Active plans<strong>0</strong></div>
-        <div class="stat">Referral count<strong>0</strong></div>
-      </div>
-      <div class="panel">
-        <h2>Welcome to EBC</h2>
-        <p>Explore the demo dashboard, plan examples, wallet, history and profile.</p>
-        <button class="primary" onclick="showPage('plans')">Explore plans</button>
-      </div>
-    </section>
-
-    <section id="plans" class="page">
-      <h2>Demo Plans</h2>
-      <p class="muted">Illustrative figures only. No earnings are promised or paid.</p>
+  <section id="plans" class="page">
+    <h2>Available Plans</h2>
+    <p class="muted">Sample plans for website testing only.</p>
+    <div class="plans">
       <div class="panel plan">
+        <span class="tag">STARTER</span>
         <h3>EBC Starter</h3>
         <div class="price">₱200</div>
-        <p>Example daily figure: ₱80</p>
-        <button class="primary" onclick="demoMessage()">View plan</button>
+        <p class="muted">Demo plan · No real returns</p>
+        <button class="primary full" onclick="choosePlan('EBC Starter',200)">Buy Plan</button>
       </div>
       <div class="panel plan">
+        <span class="tag">BASIC</span>
         <h3>EBC Basic</h3>
         <div class="price">₱500</div>
-        <p>Example daily figure: ₱120</p>
-        <button class="primary" onclick="demoMessage()">View plan</button>
+        <p class="muted">Demo plan · No real returns</p>
+        <button class="primary full" onclick="choosePlan('EBC Basic',500)">Buy Plan</button>
       </div>
       <div class="panel plan">
+        <span class="tag">PLUS</span>
         <h3>EBC Plus</h3>
         <div class="price">₱1,000</div>
-        <p>Example daily figure: ₱350</p>
-        <button class="primary" onclick="demoMessage()">View plan</button>
+        <p class="muted">Demo plan · No real returns</p>
+        <button class="primary full" onclick="choosePlan('EBC Plus',1000)">Buy Plan</button>
       </div>
       <div class="panel plan">
+        <span class="tag">PREMIUM</span>
         <h3>EBC Premium</h3>
         <div class="price">₱3,000</div>
-        <p>Example daily figure: ₱1,000</p>
-        <button class="primary" onclick="demoMessage()">View plan</button>
+        <p class="muted">Demo plan · No real returns</p>
+        <button class="primary full" onclick="choosePlan('EBC Premium',3000)">Buy Plan</button>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="wallet" class="page">
-      <h2>Wallet</h2>
-      <div class="panel">
-        <h3>Demo balance: ₱0.00</h3>
-        <p>Real payment functions are not connected.</p>
-        <button class="primary" onclick="demoMessage()">Deposit (demo)</button>
-        <button class="primary" onclick="demoMessage()">Withdraw (demo)</button>
-      </div>
-    </section>
+  <section id="checkout" class="page">
+    <h2>Checkout</h2>
+    <div class="panel">
+      <span class="tag">SIMULATED CHECKOUT</span>
+      <h3 id="checkoutPlan">Selected plan</h3>
+      <p>Example amount</p>
+      <div class="price" id="checkoutPrice">₱0</div>
+      <hr>
+      <h3>Payment method</h3>
+      <p>GCash</p>
+      <p class="muted">
+        Real GCash payments are not connected. This demo will not collect
+        money or confirm a payment.
+      </p>
+      <button class="primary full" onclick="simulatePayment()">Try demo checkout</button>
+      <br><br>
+      <button class="secondary full" onclick="showPage('plans')">Back to plans</button>
+      <p id="checkoutMessage" aria-live="polite"></p>
+    </div>
+  </section>
 
-    <section id="history" class="page">
-      <h2>Transaction History</h2>
-      <div class="panel">
-        <p>No demo transactions yet.</p>
-        <p class="muted">This prototype does not store or process payments.</p>
-      </div>
-    </section>
+  <section id="wallet" class="page">
+    <h2>Wallet</h2>
+    <div class="panel">
+      <p class="muted">DEMO BALANCE</p>
+      <div class="price">₱0.00</div>
+      <p>No real deposits or withdrawals are available.</p>
+      <button class="primary" onclick="showPage('checkout')">View demo checkout</button>
+    </div>
+  </section>
 
-    <section id="profile" class="page">
-      <h2>Profile</h2>
-      <div class="panel">
-        <label for="displayName">Display name</label>
-        <input id="displayName" placeholder="Enter a demo display name">
-        <button class="primary" onclick="saveName()">Save display name</button>
-        <p id="profileMessage" class="muted"></p>
-        <p class="muted">Demo only: your name is kept in this page session and is not an account.</p>
-      </div>
-    </section>
+  <section id="history" class="page">
+    <h2>Transaction History</h2>
+    <div class="panel">
+      <p id="historyText">No demo checkout attempts yet.</p>
+      <p class="muted">These are browser-only demo records, not proof of payment.</p>
+    </div>
+  </section>
 
-    <section id="support" class="page">
-      <h2>Support</h2>
-      <div class="panel">
-        <p>Need help with the EBC demo?</p>
-        <label for="message">Your demo message</label>
-        <textarea id="message" rows="4" placeholder="Write a test message"></textarea>
-        <button class="primary" onclick="demoMessage()">Preview message</button>
-        <p class="muted">Messages are not sent or saved.</p>
-      </div>
-    </section>
-  </main>
+  <section id="profile" class="page">
+    <h2>Profile</h2>
+    <div class="panel">
+      <label for="displayName">Demo display name</label>
+      <input id="displayName" maxlength="50" placeholder="Enter a display name">
+      <button class="primary" onclick="saveName()">Save name</button>
+      <p id="profileMessage" class="muted" aria-live="polite"></p>
+      <p class="muted">This is not a real user account or secure login.</p>
+    </div>
+  </section>
 
-  <footer>EBC Demo Website · Prototype only</footer>
+  <section id="support" class="page">
+    <h2>Support</h2>
+    <div class="panel">
+      <p>Need help testing the EBC demo?</p>
+      <label for="message">Test message</label>
+      <textarea id="message" rows="4" maxlength="500" placeholder="Write a demo message"></textarea>
+      <button class="primary" onclick="previewMessage()">Preview message</button>
+      <p id="supportMessage" class="muted" aria-live="polite"></p>
+      <p class="muted">Messages are not sent to anyone.</p>
+    </div>
+  </section>
+</main>
 
-  <script>
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(function(page) {
-        page.classList.toggle('active', page.id === id);
-      });
-      document.querySelectorAll('nav button').forEach(function(button) {
-        button.classList.toggle('active', button.dataset.page === id);
-      });
-      window.scrollTo(0, 0);
-    }
+<footer>EBC · Demonstration prototype · No real payments</footer>
 
-    document.querySelectorAll('nav button').forEach(function(button) {
-      button.addEventListener('click', function() {
-        showPage(button.dataset.page);
-      });
-    });
+<script>
+let selectedPlan = null;
+let selectedAmount = 0;
+let attempts = 0;
 
-    function demoMessage() {
-      alert('This is a demo only. No money or transaction is processed.');
-    }
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.toggle('active', page.id === id);
+  });
+  document.querySelectorAll('nav button').forEach(button => {
+    button.classList.toggle('active', button.dataset.page === id);
+  });
+  window.scrollTo(0, 0);
+}
 
-    function saveName() {
-      var name = document.getElementById('displayName').value.trim();
-      document.getElementById('profileMessage').textContent =
-        name ? 'Demo display name: ' + name : 'Please enter a display name.';
-    }
-  </script>
+document.querySelectorAll('nav button').forEach(button => {
+  button.addEventListener('click', () => showPage(button.dataset.page));
+});
+
+function choosePlan(name, amount) {
+  selectedPlan = name;
+  selectedAmount = amount;
+  document.getElementById('checkoutPlan').textContent = name;
+  document.getElementById('checkoutPrice').textContent =
+    '₱' + amount.toLocaleString('en-PH');
+  document.getElementById('checkoutMessage').textContent = '';
+  showPage('checkout');
+}
+
+function simulatePayment() {
+  if (!selectedPlan) {
+    document.getElementById('checkoutMessage').textContent =
+      'Please select a demo plan first.';
+    return;
+  }
+
+  attempts++;
+  document.getElementById('transactionCount').textContent = attempts;
+  document.getElementById('historyText').textContent =
+    'Demo checkout attempt: ' + selectedPlan + ' — ₱' +
+    selectedAmount.toLocaleString('en-PH') +
+    '. Status: DEMO ONLY — NOT PAID.';
+  document.getElementById('checkoutMessage').textContent =
+    'Demo only: no GCash app was opened and no money was transferred.';
+}
+
+function saveName() {
+  const name = document.getElementById('displayName').value.trim();
+  document.getElementById('profileMessage').textContent =
+    name ? 'Demo name saved for this page session: ' + name :
+    'Please enter a display name.';
+}
+
+function previewMessage() {
+  const message = document.getElementById('message').value.trim();
+  document.getElementById('supportMessage').textContent =
+    message ? 'Demo preview: ' + message : 'Please enter a test message.';
+}
+</script>
 </body>
 </html>
