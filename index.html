@@ -2,300 +2,424 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EBC | Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071b45">
+<title>EBC Investment</title>
+
 <style>
 :root {
-  --navy:#102b59;
-  --blue:#1769e0;
-  --light:#f1f5fb;
-  --text:#17233b;
-  --muted:#68758b;
+  --navy: #071b45;
+  --blue: #1459d9;
+  --light: #eef4ff;
+  --white: #ffffff;
+  --text: #17233d;
+  --muted: #69758c;
+  --border: #dce5f5;
 }
-* { box-sizing:border-box; }
+* { box-sizing: border-box; }
 body {
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:var(--light);
-  color:var(--text);
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f7fc;
+  color: var(--text);
 }
 header {
-  padding:24px 18px;
-  color:white;
-  background:linear-gradient(130deg,#102044,#1769e0);
+  background: linear-gradient(135deg, #071b45, #1558c8);
+  color: white;
+  padding: 24px 18px 30px;
+  border-radius: 0 0 25px 25px;
 }
-.brand { font-size:28px;font-weight:800;letter-spacing:2px; }
-header p { margin:7px 0 0;color:#d6e5ff; }
-nav {
-  display:flex;gap:8px;overflow-x:auto;
-  padding:12px;background:white;position:sticky;top:0;
-  z-index:5;box-shadow:0 2px 8px #102b5910;
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 1000px;
+  margin: auto;
 }
-button { font:inherit;cursor:pointer; }
-nav button {
-  border:0;border-radius:9px;padding:11px 14px;
-  background:#e8eef8;color:var(--navy);font-weight:bold;
-}
-nav button.active { background:var(--blue);color:white; }
-main { max-width:900px;margin:auto;padding:16px; }
+.brand { font-size: 21px; font-weight: 800; letter-spacing: 1px; }
+.tag { font-size: 11px; color: #cbdcff; margin-top: 5px; }
+.hero { max-width: 1000px; margin: 35px auto 5px; }
+.hero h1 { font-size: clamp(27px, 6vw, 42px); margin: 0 0 12px; line-height: 1.15; }
+.hero p { color: #dce8ff; line-height: 1.6; max-width: 550px; }
+main { max-width: 1000px; padding: 20px 15px 45px; margin: auto; }
 .notice {
-  background:#fff3cd;color:#664d03;padding:13px;
-  border-radius:12px;font-size:13px;line-height:1.6;
+  background: #fff8e6;
+  border: 1px solid #f2d78a;
+  color: #73520a;
+  border-radius: 12px;
+  padding: 13px;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 22px;
 }
-.page { display:none; }
-.page.active { display:block; }
+.section-title { margin: 25px 0 6px; font-size: 23px; }
+.subtitle { color: var(--muted); font-size: 14px; line-height: 1.5; margin: 0 0 18px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+.plan {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 20px;
+  box-shadow: 0 5px 20px #142f5b08;
+}
+.plan.featured { border: 2px solid var(--blue); }
+.plan-label { color: var(--blue); font-weight: 700; font-size: 13px; }
+.amount { font-size: 29px; font-weight: 800; margin: 13px 0 8px; color: var(--navy); }
+.plan p { color: var(--muted); font-size: 13px; line-height: 1.5; }
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 10px;
+  background: var(--blue);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 13px 15px;
+  width: 100%;
+  margin-top: 10px;
+}
+button:active { transform: scale(.99); }
+button.secondary { background: #e9effb; color: var(--navy); }
 .panel {
-  background:white;padding:19px;margin:14px 0;
-  border-radius:16px;box-shadow:0 4px 16px #102b590c;
+  display: none;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 20px;
+  margin-top: 22px;
 }
-.hero {
-  padding:25px;background:linear-gradient(130deg,#102b59,#1769e0);
-  color:white;border-radius:18px;margin:15px 0;
+.panel.show { display: block; }
+.panel h2 { margin-top: 0; font-size: 22px; }
+.detail {
+  background: var(--light);
+  border-radius: 12px;
+  padding: 15px;
+  margin: 15px 0;
+  line-height: 1.7;
 }
-.hero h2 { font-size:28px;margin:10px 0; }
-.muted { color:var(--muted);font-size:13px;line-height:1.5; }
-.hero .muted { color:#d6e5ff; }
-.grid {
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
-  gap:12px;
+label { display: block; font-size: 13px; font-weight: 700; margin: 13px 0 6px; }
+input, select, textarea {
+  width: 100%;
+  border: 1px solid #cbd7eb;
+  border-radius: 9px;
+  padding: 12px;
+  font-size: 15px;
+  background: white;
 }
-.stat {
-  background:white;padding:17px;border:1px solid #e0e8f5;
-  border-radius:14px;
+.small { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.status {
+  border-radius: 10px;
+  background: #fff4d6;
+  color: #805800;
+  padding: 12px;
+  margin: 14px 0;
+  font-size: 13px;
+  line-height: 1.5;
 }
-.stat strong { display:block;font-size:22px;margin-top:9px; }
-.plans {
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:14px;
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
+.row button { flex: 1; min-width: 120px; }
+.history-item {
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+  font-size: 14px;
+  line-height: 1.5;
 }
-.plan { margin:0;border:1px solid #e0e8f5; }
-.plan h3 { margin-top:0; }
-.price { font-size:29px;font-weight:800;color:var(--blue);margin:12px 0; }
-.primary,.secondary {
-  border:0;border-radius:10px;padding:13px 16px;font-weight:bold;
+footer { text-align: center; color: var(--muted); font-size: 12px; padding: 20px; line-height: 1.7; }
+nav.bottom {
+  display: flex;
+  justify-content: space-around;
+  gap: 4px;
+  position: sticky;
+  bottom: 0;
+  background: white;
+  border-top: 1px solid var(--border);
+  padding: 9px 4px;
+  z-index: 5;
 }
-.primary { background:var(--blue);color:white; }
-.secondary { background:#e8eef8;color:var(--navy); }
-.full { width:100%; }
-input,textarea {
-  width:100%;padding:13px;border:1px solid #cbd5e1;
-  border-radius:9px;margin:8px 0 15px;font:inherit;
+nav.bottom button {
+  margin: 0;
+  background: transparent;
+  color: var(--navy);
+  font-size: 11px;
+  padding: 9px 4px;
+  width: auto;
 }
-label { font-size:14px;font-weight:bold; }
-footer { text-align:center;padding:25px;color:var(--muted);font-size:12px; }
-.tag {
-  display:inline-block;background:#e8f1ff;color:#1454ac;
-  padding:5px 9px;border-radius:20px;font-size:12px;font-weight:bold;
-}
-hr { border:0;border-top:1px solid #e5eaf2;margin:17px 0; }
-@media(max-width:420px) {
-  header { padding:20px 15px; }
-  main { padding:12px; }
-  .hero h2 { font-size:24px; }
+nav.bottom button:focus { background: var(--light); }
+@media (min-width: 700px) {
+  nav.bottom { position: static; border: 0; background: transparent; max-width: 1000px; margin: auto; }
+  nav.bottom button { font-size: 13px; }
 }
 </style>
 </head>
+
 <body>
-
-<header>
-  <div class="brand">EBC</div>
-  <p>Your dashboard, all in one place</p>
+<header id="home">
+  <div class="nav">
+    <div>
+      <div class="brand">EBC INVESTMENT</div>
+      <div class="tag">YOUR ACCOUNT • YOUR RECORDS</div>
+    </div>
+    <div style="font-size:12px;color:#dce8ff">Website Preview</div>
+  </div>
+  <div class="hero">
+    <h1>Welcome to EBC Investment</h1>
+    <p>View plan information, review payment instructions, and keep track of your submitted payment details in one place.</p>
+  </div>
 </header>
-
-<nav aria-label="Main navigation">
-  <button class="active" data-page="home">Home</button>
-  <button data-page="plans">Plans</button>
-  <button data-page="wallet">Wallet</button>
-  <button data-page="history">History</button>
-  <button data-page="profile">Profile</button>
-  <button data-page="support">Support</button>
-</nav>
 
 <main>
   <div class="notice">
-    <strong>DEMO WEBSITE ONLY.</strong>
-    No real investments, deposits, withdrawals, or payouts are processed.
-    Plan prices are examples, not an offer or a promise of returns.
-    The checkout below is a simulation and does not open a real payment.
+    <strong>Important:</strong> This is a website prototype. Payments are not processed or verified here. No plan is activated by submitting this form. Review the legal terms and independently verify the business before sending money.
   </div>
 
-  <section id="home" class="page active">
-    <div class="hero">
-      <span class="tag">DEMO ACCOUNT</span>
-      <h2>Welcome to EBC</h2>
-      <p>Manage your demo plans and explore your dashboard.</p>
-      <button class="primary" onclick="showPage('plans')">Explore plans →</button>
-    </div>
-    <div class="grid">
-      <div class="stat">Demo balance<strong>₱0.00</strong></div>
-      <div class="stat">Active plans<strong>0</strong></div>
-      <div class="stat">Transactions<strong id="transactionCount">0</strong></div>
-    </div>
-    <div class="panel">
-      <h3>Getting started</h3>
-      <p>Explore the sample plans, then try the simulated checkout.</p>
-      <p class="muted">Your demo activity is stored only in this browser and is not a real account.</p>
-    </div>
+  <section id="plans">
+    <h2 class="section-title">Choose Your Plan</h2>
+    <p class="subtitle">Choose one option to view its payment instructions.</p>
+    <div class="grid" id="planGrid"></div>
   </section>
 
-  <section id="plans" class="page">
-    <h2>Available Plans</h2>
-    <p class="muted">Sample plans for website testing only.</p>
-    <div class="plans">
-      <div class="panel plan">
-        <span class="tag">STARTER</span>
-        <h3>EBC Starter</h3>
-        <div class="price">₱200</div>
-        <p class="muted">Demo plan · No real returns</p>
-        <button class="primary full" onclick="choosePlan('EBC Starter',200)">Buy Plan</button>
-      </div>
-      <div class="panel plan">
-        <span class="tag">BASIC</span>
-        <h3>EBC Basic</h3>
-        <div class="price">₱500</div>
-        <p class="muted">Demo plan · No real returns</p>
-        <button class="primary full" onclick="choosePlan('EBC Basic',500)">Buy Plan</button>
-      </div>
-      <div class="panel plan">
-        <span class="tag">PLUS</span>
-        <h3>EBC Plus</h3>
-        <div class="price">₱1,000</div>
-        <p class="muted">Demo plan · No real returns</p>
-        <button class="primary full" onclick="choosePlan('EBC Plus',1000)">Buy Plan</button>
-      </div>
-      <div class="panel plan">
-        <span class="tag">PREMIUM</span>
-        <h3>EBC Premium</h3>
-        <div class="price">₱3,000</div>
-        <p class="muted">Demo plan · No real returns</p>
-        <button class="primary full" onclick="choosePlan('EBC Premium',3000)">Buy Plan</button>
-      </div>
+  <section id="payment" class="panel">
+    <h2>Payment Instructions</h2>
+    <p class="subtitle">Review your selected plan before making any payment.</p>
+    <div class="detail" id="selectedDetails"></div>
+
+    <div class="status">
+      <strong>Prototype mode:</strong> No verified GCash merchant integration is connected. Do not treat this page as proof of payment or as a promise of returns.
     </div>
+
+    <label for="reference">Payment reference (optional)</label>
+    <input id="reference" type="text" maxlength="80" placeholder="Enter reference only if already paid">
+
+    <label for="paymentNote">Payment note (optional)</label>
+    <textarea id="paymentNote" rows="3" maxlength="300" placeholder="Add a note for your own record"></textarea>
+
+    <div class="row">
+      <button onclick="saveRecord()">Save Pending Record</button>
+      <button class="secondary" onclick="showPlans()">Back to Plans</button>
+    </div>
+    <p class="small">Saving creates a record on this device only. It does not send a payment, contact an administrator, or verify a transaction.</p>
   </section>
 
-  <section id="checkout" class="page">
-    <h2>Checkout</h2>
-    <div class="panel">
-      <span class="tag">SIMULATED CHECKOUT</span>
-      <h3 id="checkoutPlan">Selected plan</h3>
-      <p>Example amount</p>
-      <div class="price" id="checkoutPrice">₱0</div>
-      <hr>
-      <h3>Payment method</h3>
-      <p>GCash</p>
-      <p class="muted">
-        Real GCash payments are not connected. This demo will not collect
-        money or confirm a payment.
-      </p>
-      <button class="primary full" onclick="simulatePayment()">Try demo checkout</button>
-      <br><br>
-      <button class="secondary full" onclick="showPage('plans')">Back to plans</button>
-      <p id="checkoutMessage" aria-live="polite"></p>
+  <section id="wallet" class="panel">
+    <h2>Wallet & Account Status</h2>
+    <div class="detail">
+      <div class="small">Account status</div>
+      <strong>Prototype — not connected to a live account</strong>
+      <p class="small">No real balance or withdrawable funds are available through this page.</p>
     </div>
+    <h3>Saved records</h3>
+    <div id="historyList"></div>
+    <button class="secondary" onclick="showPlans()">Browse Plans</button>
   </section>
 
-  <section id="wallet" class="page">
-    <h2>Wallet</h2>
-    <div class="panel">
-      <p class="muted">DEMO BALANCE</p>
-      <div class="price">₱0.00</div>
-      <p>No real deposits or withdrawals are available.</p>
-      <button class="primary" onclick="showPage('checkout')">View demo checkout</button>
-    </div>
-  </section>
-
-  <section id="history" class="page">
-    <h2>Transaction History</h2>
-    <div class="panel">
-      <p id="historyText">No demo checkout attempts yet.</p>
-      <p class="muted">These are browser-only demo records, not proof of payment.</p>
-    </div>
-  </section>
-
-  <section id="profile" class="page">
+  <section id="profile" class="panel">
     <h2>Profile</h2>
-    <div class="panel">
-      <label for="displayName">Demo display name</label>
-      <input id="displayName" maxlength="50" placeholder="Enter a display name">
-      <button class="primary" onclick="saveName()">Save name</button>
-      <p id="profileMessage" class="muted" aria-live="polite"></p>
-      <p class="muted">This is not a real user account or secure login.</p>
-    </div>
+    <p class="subtitle">These fields are for a local preview only.</p>
+    <label for="profileName">Display name</label>
+    <input id="profileName" maxlength="80" placeholder="Your display name">
+    <label for="profileEmail">Email address</label>
+    <input id="profileEmail" type="email" maxlength="120" placeholder="you@example.com">
+    <button onclick="saveProfile()">Save Profile on This Device</button>
+    <p class="small">This prototype has no secure login or cloud database. Do not enter passwords, GCash PINs, OTPs, or sensitive identity details.</p>
   </section>
 
-  <section id="support" class="page">
+  <section id="support" class="panel">
     <h2>Support</h2>
-    <div class="panel">
-      <p>Need help testing the EBC demo?</p>
-      <label for="message">Test message</label>
-      <textarea id="message" rows="4" maxlength="500" placeholder="Write a demo message"></textarea>
-      <button class="primary" onclick="previewMessage()">Preview message</button>
-      <p id="supportMessage" class="muted" aria-live="polite"></p>
-      <p class="muted">Messages are not sent to anyone.</p>
+    <p class="subtitle">Before sending money, confirm the business identity, authorization, complete terms, and payment recipient independently.</p>
+    <div class="detail">
+      <strong>Payment safety</strong>
+      <p class="small">Never share your GCash MPIN or OTP. A screenshot or reference number alone does not prove that a payment has been received.</p>
     </div>
+    <p class="small">Add only a verified official support contact here once it is available. No support contact has been configured in this prototype.</p>
   </section>
 </main>
 
-<footer>EBC · Demonstration prototype · No real payments</footer>
+<nav class="bottom" aria-label="Main navigation">
+  <button onclick="showHome()">Home</button>
+  <button onclick="showPlans()">Plans</button>
+  <button onclick="showPanel('wallet')">Wallet</button>
+  <button onclick="showPanel('profile')">Profile</button>
+  <button onclick="showPanel('support')">Support</button>
+</nav>
+
+<footer>
+  EBC Investment • Prototype website<br>
+  No live payment processing, verified balance, or payouts are connected.
+</footer>
 
 <script>
+const plans = [
+  { id: "plan200", name: "Starter", amount: 200 },
+  { id: "plan500", name: "Basic", amount: 500 },
+  { id: "plan1000", name: "Plus", amount: 1000 },
+  { id: "plan3000", name: "Premium", amount: 3000 }
+];
+
 let selectedPlan = null;
-let selectedAmount = 0;
-let attempts = 0;
 
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(page => {
-    page.classList.toggle('active', page.id === id);
-  });
-  document.querySelectorAll('nav button').forEach(button => {
-    button.classList.toggle('active', button.dataset.page === id);
-  });
-  window.scrollTo(0, 0);
+function peso(value) {
+  return "₱" + Number(value).toLocaleString("en-PH");
 }
 
-document.querySelectorAll('nav button').forEach(button => {
-  button.addEventListener('click', () => showPage(button.dataset.page));
-});
+function renderPlans() {
+  const grid = document.getElementById("planGrid");
+  grid.innerHTML = "";
+  plans.forEach((plan, index) => {
+    const card = document.createElement("article");
+    card.className = "plan" + (index === 1 ? " featured" : "");
 
-function choosePlan(name, amount) {
-  selectedPlan = name;
-  selectedAmount = amount;
-  document.getElementById('checkoutPlan').textContent = name;
-  document.getElementById('checkoutPrice').textContent =
-    '₱' + amount.toLocaleString('en-PH');
-  document.getElementById('checkoutMessage').textContent = '';
-  showPage('checkout');
+    const label = document.createElement("div");
+    label.className = "plan-label";
+    label.textContent = plan.name;
+
+    const amount = document.createElement("div");
+    amount.className = "amount";
+    amount.textContent = peso(plan.amount);
+
+    const description = document.createElement("p");
+    description.textContent = "Selected amount: " + peso(plan.amount) +
+      ". Review the payment details and terms before proceeding.";
+
+    const button = document.createElement("button");
+    button.textContent = "Buy Now";
+    button.addEventListener("click", () => choosePlan(plan.id));
+
+    card.append(label, amount, description, button);
+    grid.appendChild(card);
+  });
 }
 
-function simulatePayment() {
+function choosePlan(id) {
+  selectedPlan = plans.find(plan => plan.id === id);
+  if (!selectedPlan) return;
+
+  document.getElementById("selectedDetails").textContent =
+    selectedPlan.name + " Plan — " + peso(selectedPlan.amount) +
+    ". Payment recipient and live GCash checkout are not configured in this prototype.";
+
+  document.getElementById("reference").value = "";
+  document.getElementById("paymentNote").value = "";
+  showPanel("payment");
+}
+
+function hidePanels() {
+  ["payment", "wallet", "profile", "support"].forEach(id => {
+    document.getElementById(id).classList.remove("show");
+  });
+}
+
+function showHome() {
+  hidePanels();
+  document.getElementById("home").scrollIntoView({ behavior: "smooth" });
+}
+
+function showPlans() {
+  hidePanels();
+  document.getElementById("plans").scrollIntoView({ behavior: "smooth" });
+}
+
+function showPanel(id) {
+  hidePanels();
+  document.getElementById(id).classList.add("show");
+  if (id === "wallet") renderHistory();
+  document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+}
+
+function getRecords() {
+  try {
+    return JSON.parse(localStorage.getItem("ebcPrototypeRecords") || "[]");
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveRecord() {
   if (!selectedPlan) {
-    document.getElementById('checkoutMessage').textContent =
-      'Please select a demo plan first.';
+    alert("Please choose a plan first.");
     return;
   }
 
-  attempts++;
-  document.getElementById('transactionCount').textContent = attempts;
-  document.getElementById('historyText').textContent =
-    'Demo checkout attempt: ' + selectedPlan + ' — ₱' +
-    selectedAmount.toLocaleString('en-PH') +
-    '. Status: DEMO ONLY — NOT PAID.';
-  document.getElementById('checkoutMessage').textContent =
-    'Demo only: no GCash app was opened and no money was transferred.';
+  const records = getRecords();
+  records.unshift({
+    plan: selectedPlan.name,
+    amount: selectedPlan.amount,
+    reference: document.getElementById("reference").value.trim(),
+    note: document.getElementById("paymentNote").value.trim(),
+    status: "Pending — not verified",
+    date: new Date().toLocaleString()
+  });
+
+  try {
+    localStorage.setItem("ebcPrototypeRecords", JSON.stringify(records));
+    alert("Saved on this device as a pending prototype record. No payment was processed or verified.");
+    renderHistory();
+    showPanel("wallet");
+  } catch (error) {
+    alert("Unable to save this record on your device.");
+  }
 }
 
-function saveName() {
-  const name = document.getElementById('displayName').value.trim();
-  document.getElementById('profileMessage').textContent =
-    name ? 'Demo name saved for this page session: ' + name :
-    'Please enter a display name.';
+function renderHistory() {
+  const list = document.getElementById("historyList");
+  const records = getRecords();
+  list.innerHTML = "";
+
+  if (!records.length) {
+    list.textContent = "No saved records yet.";
+    return;
+  }
+
+  records.forEach(record => {
+    const item = document.createElement("div");
+    item.className = "history-item";
+
+    const title = document.createElement("strong");
+    title.textContent = record.plan + " — " + peso(record.amount);
+
+    const status = document.createElement("div");
+    status.textContent = record.status;
+
+    const date = document.createElement("div");
+    date.className = "small";
+    date.textContent = record.date;
+
+    item.append(title, status, date);
+    if (record.reference) {
+      const ref = document.createElement("div");
+      ref.className = "small";
+      ref.textContent = "Reference entered: " + record.reference;
+      item.appendChild(ref);
+    }
+    list.appendChild(item);
+  });
 }
 
-function previewMessage() {
-  const message = document.getElementById('message').value.trim();
-  document.getElementById('supportMessage').textContent =
-    message ? 'Demo preview: ' + message : 'Please enter a test message.';
+function saveProfile() {
+  const name = document.getElementById("profileName").value.trim();
+  const email = document.getElementById("profileEmail").value.trim();
+
+  try {
+    localStorage.setItem("ebcPrototypeProfile", JSON.stringify({ name, email }));
+    alert("Profile saved locally on this device only.");
+  } catch (error) {
+    alert("Unable to save the profile on this device.");
+  }
 }
+
+function loadProfile() {
+  try {
+    const profile = JSON.parse(localStorage.getItem("ebcPrototypeProfile") || "{}");
+    document.getElementById("profileName").value = profile.name || "";
+    document.getElementById("profileEmail").value = profile.email || "";
+  } catch (error) {
+    // Keep empty profile fields if local storage is unavailable.
+  }
+}
+
+renderPlans();
+renderHistory();
+loadProfile();
 </script>
 </body>
 </html>
